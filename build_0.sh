@@ -230,5 +230,5 @@ sudo chroot ./"$ROOTFOLDERNAME" bash
 echo "$_ST                                                    $_FN"
 echo "$_ST Kurulum tamamlandı.                                $_FN"
 
-sleep
+sleep 60
 

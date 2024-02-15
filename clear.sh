@@ -1,4 +1,6 @@
 
-umount -lf -R ./debroot/* 2>/dev/null
+sudo umount -lf -R ./debroot/* 2>/dev/null
 
-rm -rf ./debroot
+sudo rm -rf ./debroot
+
+sudo rm -rf ./tmp/*

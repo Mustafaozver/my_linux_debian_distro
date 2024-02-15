@@ -24,7 +24,9 @@ sleep 1
 
 ##
 
-sudo dpkg -i ./debs/*.deb
+sudo dpkg -i /setup/debs/*.deb
+
+sudo sh ./setup_17g.sh
 
 ##
 
@@ -35,3 +37,5 @@ echo "$_ST Dahili düzenlemeler uygulandı.                     $_FN"
 echo "$_ST                                                    $_FN"
 
 bash
+
+sudo rm -rf /setup/*

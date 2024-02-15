@@ -23,5 +23,51 @@ ROOTFOLDERNAME="debroot"
 ##sudo su
 
 echo "$_ST                                                    $_FN"
-echo "$_ST ISO imajı oluşturuluyor...                         $_FN"
+echo "$_ST ISO imajı üretiliyor...                            $_FN"
 sleep 1
+
+
+#
+echo "$_ST ISO Uygulamaları yüleniyor...                      $_FN"
+sleep 1
+
+sudo chroot ./"$ROOTFOLDERNAME" apt autoremove
+sudo chroot ./"$ROOTFOLDERNAME" apt update
+sudo chroot ./"$ROOTFOLDERNAME" apt upgrade -y
+
+
+
+sudo umount -lf -R ./"$ROOTFOLDERNAME"/* 2>/dev/null
+
+sudo chroot ./"$ROOTFOLDERNAME" apt autoremove
+
+sudo rm -f ./"$ROOTFOLDERNAME"/root/.bash_history
+sudo rm -rf ./"$ROOTFOLDERNAME"/var/lib/apt/lists/*
+
+find ./"$ROOTFOLDERNAME"/var/log/ -type f | xargs rm -f
+
+mkdir ./tmp/iso
+
+sudo mksquashfs ./"$ROOTFOLDERNAME" ./tmp/filesystem.squashfs -comp gzip -wildcards
+
+mkdir -p ./tmp/iso/live
+
+mv ./tmp/filesystem.squashfs ./tmp/iso/live/filesystem.squashfs
+
+
+
+sudo cp -pf ./"$ROOTFOLDERNAME"/boot/initrd.img* ./tmp/iso/live/
+sudo cp -pf ./"$ROOTFOLDERNAME"/boot/vmlinuz* ./tmp/iso/live/
+
+mkdir -p ./tmp/iso/boot/grub/
+
+cp ./_files/grub.cfg ./tmp/iso/boot/grub/
+
+sudo grub-mkrescue ./tmp/iso -o ./tmp/mydistro.iso
+
+
+
+
+
+
+
