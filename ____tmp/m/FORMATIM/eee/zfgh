@@ -1,0 +1,170 @@
+mkswap /dev/nvme0n1p3
+swapon /dev/nvme0n1p3
+mkfs.vfat /dev/nvme0n1p1
+mkfs.ext4 /dev/nvme0n1p2
+mkfs.btrfs /dev/nvme0n1p4
+mkfs.ext4 /dev/nvme0n1p5
+mkfs.vfat /dev/nvme0n1p6
+
+blkid
+/dev/nvme0n1p5: UUID="256da897-946e-48fa-b8d7-0428643fd8a0" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="da577265-78e7-462d-baca-ca621046addb"
+/dev/nvme0n1p3: UUID="e5887928-472e-4564-b4fd-15e23e5e0b70" TYPE="swap" PARTUUID="07b55ea1-e283-4f0b-9836-e0316aa72b8c"
+/dev/nvme0n1p1: SEC_TYPE="msdos" UUID="D83B-C3A7" BLOCK_SIZE="512" TYPE="vfat" PARTUUID="86ade9ae-6424-4268-a515-9255b9cd79de"
+/dev/nvme0n1p6: UUID="D88B-8B98" BLOCK_SIZE="512" TYPE="vfat" PARTUUID="8d782f3b-ecb5-489d-881f-4b91920ae9e7"
+/dev/nvme0n1p4: UUID="60fb8bc8-3072-443a-97a6-3ad6539dae71" UUID_SUB="00b30cf3-fc61-41da-8e7b-25b33c889835" BLOCK_SIZE="4096" TYPE="btrfs" PARTUUID="27507e09-bcea-4a62-bccd-eee5b04736ec"
+/dev/nvme0n1p2: UUID="d28d2c50-e987-448e-bc13-e37439cbaa5f" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="bd2a58b5-dff4-4d7f-8707-8db9ac62b972"
+
+
+
+
+
+mount /dev/nvme0n1p4 /mnt
+btrfs su cr /mnt/@
+btrfs su cr /mnt/@snapshots
+umount /mnt
+
+
+
+
+
+
+
+sudo chroot /mnt apt update
+sudo chroot /mnt apt --fix-missing update
+sudo chroot /mnt apt --fix-broken install
+sudo chroot /mnt apt autoremove
+sudo chroot /mnt apt clean
+
+
+
+
+sudo chroot /mnt apt-add-repository universe -y
+sudo chroot /mnt add-apt-repository ppa:unit193/encryption -y
+sudo chroot /mnt add-apt-repository ppa:alessandro-strada/ppa -y
+sudo chroot /mnt add-apt-repository ppa:flatpak/stable -y
+sudo chroot /mnt add-apt-repository ppa:libreoffice -y
+sudo chroot /mnt add-apt-repository ppa:obsproject/obs-studio -y
+sudo chroot /mnt add-apt-repository ppa:danielrichter2007/grub-customizer -y
+
+
+
+
+
+    1  ping google.com
+    2  clear
+    3  cd /
+    4  clear
+    5  fdisk /dev/nvme0n1
+    6  lsblk
+    7  blkid
+    8  clear
+    9  mkswap /dev/nvme0n1p3
+   10  swapon /dev/nvme0n1p3
+   11  mkfs.vfat /dev/nvme0n1p1
+   12  mkfs.ext4 /dev/nvme0n1p2
+   13  mkfs.btrfs /dev/nvme0n1p4
+   14  mkfs.ext4 /dev/nvme0n1p5
+   15  mkfs.vfat /dev/nvme0n1p6
+   16  blkid
+   17  clear
+   18  mount /dev/nvme0n1p4 /mnt
+   19  btrfs su cr /mnt/@
+   20  btrfs su cr /mnt/@snapshots
+   21  umount /mnt
+   22  mount -t btrfs -o noatime,compress=lzo,space_cache=v2,subvol=@ /dev/nvme0n1p4 /mnt
+   23  mkdir -p /mnt/.snapshots
+   24  mount -t btrfs -o noatime,compress=lzo,space_cache=v2,subvol=@snapshots /dev/nvme0n1p4 /mnt/.snapshots
+   25  mkdir -p /mnt/home
+   26  mount /dev/nvme0n1p5 /mnt/home
+   27  mkdir -p /mnt/boot
+   28  mount /dev/nvme0n1p2 /mnt/boot
+   29  mkdir -p /mnt/boot/efi
+   30  mount /dev/nvme0n1p1 /mnt/boot/efi
+   31  echo "sağ sol"
+   32  clear
+   33  debootstrap
+   34  apt install debootstrap
+   35  debootstrap
+   36  debootstrap --help
+   37  debootstrap mantic /mnt
+   38  clear
+   39  mkdir -p /mnt/etc
+   40  mkdir -p /mnt/dev
+   41  mkdir -p /mnt/sys
+   42  mkdir -p /mnt/proc
+   43  mount --rbind /sys /mnt/sys && mount --make-rslave /mnt/sys
+   44  mount --rbind /dev /mnt/dev && mount --make-rslave /mnt/dev
+   45  mount --rbind /proc /mnt/proc && mount --make-rslave /mnt/proc
+   46  sudo chroot /mnt apt update
+   47  cp /etc/apt/sources.list /mnt/etc/apt/
+   48  nano /mnt/etc/apt/sources.list
+   49  sudo chroot /mnt apt update
+   50  clear
+   51  sudo chroot /mnt apt-add-repository universe -y
+   52  sudo chroot /mnt add-apt-repository ppa:unit193/encryption -y
+   53  sudo chroot /mnt add-apt-repository ppa:alessandro-strada/ppa -y
+   54  sudo chroot /mnt add-apt-repository ppa:flatpak/stable -y
+   55  sudo chroot /mnt add-apt-repository ppa:libreoffice -y
+   56  sudo chroot /mnt add-apt-repository ppa:obsproject/obs-studio -y
+   57  sudo chroot /mnt add-apt-repository ppa:danielrichter2007/grub-customizer -y
+   58  sudo chroot /mnt apt update
+   59  cp /etc/apt/resolv.conf /mnt/etc/apt/
+   60  cp /etc/resolv.conf /mnt/etc/
+   61  nano /mnt/etc/resolv.conf
+   62  sudo chroot /mnt add-apt-repository ppa:danielrichter2007/grub-customizer -y
+   63  sudo chroot /mnt apt update
+   64  sudo chroot /mnt ln -s /usr/bin/python3.5 /usr/bin/python3
+   65  sudo chroot /mnt add-apt-repository ppa:danielrichter2007/grub-customizer -y
+   66  clear
+   67  sudo chroot /mnt python3
+   68  ls
+   69  cd mnt
+   70  ls
+   71  cd ..
+   72  ps
+   73  clear
+   74*
+   75  sudo chroot /mnt apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev wget
+   76  sudo chroot /mnt add-apt-repository ppa:danielrichter2007/grub-customizer -y
+   77* cp /etc/apt/resolv.conf /mnt/etc/
+   78  history
+   79  sudo chroot /mnt apt install add-apt-repository
+   80  sudo chroot /mnt apt update
+   81  clear
+   82  sudo chroot /mnt apt update
+   83  sudo chroot /mnt apt --fix-missing update
+   84  sudo chroot /mnt apt --fix-broken install
+   85  sudo chroot /mnt apt-add-repository universe -y
+   86  sudo chroot /mnt add-apt-repository ppa:unit193/encryption -y
+   87  sudo chroot /mnt add-apt-repository ppa:alessandro-strada/ppa -y
+   88  sudo chroot /mnt add-apt-repository ppa:flatpak/stable -y
+   89  sudo chroot /mnt add-apt-repository ppa:libreoffice -y
+   90  sudo chroot /mnt add-apt-repository ppa:obsproject/obs-studio -y
+   91  sudo chroot /mnt add-apt-repository ppa:danielrichter2007/grub-customizer -y
+   92  sudo chroot /mnt apt update
+   93  sudo chroot /mnt apt --fix-missing update
+   94  sudo chroot /mnt apt --fix-broken install
+   95  sudo chroot /mnt apt autoremove
+   96  sudo chroot /mnt apt clean
+   97  sudo chroot /mnt apt update
+   98  sudo chroot /mnt apt --fix-missing update
+   99  sudo chroot /mnt apt --fix-broken install
+  100  sudo chroot /mnt apt autoremove
+  101  sudo chroot /mnt apt clean
+  102  sudo chroot /mnt apt-add-repository universe -y
+  103  sudo chroot /mnt add-apt-repository ppa:unit193/encryption -y
+  104  sudo chroot /mnt add-apt-repository ppa:alessandro-strada/ppa -y
+  105  sudo chroot /mnt add-apt-repository ppa:flatpak/stable -y
+  106  sudo chroot /mnt add-apt-repository ppa:libreoffice -y
+  107  sudo chroot /mnt add-apt-repository ppa:obsproject/obs-studio -y
+  108  sudo chroot /mnt add-apt-repository ppa:danielrichter2007/grub-customizer -y
+  109  sudo chroot /mnt apt install python3.10
+  110  sudo chroot /mnt apt install python3
+  111  sudo chroot /mnt bash
+  112  history
+
+
+
+
+
+

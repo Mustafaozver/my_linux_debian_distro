@@ -1,0 +1,223 @@
+debian iso
+linux kernel deb
+
+# echo -e "lsblk" | bash ==> komutu girdilerle başlatma
+# echo -e "o\nn\np\n1\n\n+512M\nt\n1\n1\nn\np\n2\n\n+8G\nn\np\n3\n\n\nw" | sudo fdisk /dev/sdX && sudo mkfs.vfat /dev/sdX1 && sudo mkfs.ext4 /dev/sdX2 && sudo mkfs.ext4 /dev/sdX3
+
+
+## ram miktarını öğrenme
+## Math.log(16777212) / Math.log(2)
+free
+
+## diskleri öğrenme
+fdisk -l
+lsblk -d
+
+
+
+# seçili diski araştır
+fdisk -l /dev/nvme0n1
+
+sudo su
+apt update
+apt ugrade
+
+apt install exfat-utils -y
+apt install debootstrap genfstab -y
+apt install btrfs-progs zfsutils-linux zfs-initramfs zfs-dkms -y
+
+systemctl start zfs-zed.service
+modprobe zfs
+
+
+
+
+
+## UEFI veya MBR ?
+cat /sys/firmware/efi/fw_platform_size
+
+# Internet kontrol et
+ip link
+ping google.com
+
+# Klavye ayarları
+loadkeys trq
+
+# diskleri gör
+lsblk
+blkid
+
+
+# Disk biçimlendir
+fdisk -l
+fdisk /dev/nvme0n1
+g : Generate GPT Table
+{
+	1 : EFI System
+	2 : MBR partition scheme
+	4 : BIOS boot
+	19 : Linux swap
+	20 : Linux File System
+	42 : Linux Home Directory
+	...
+}
+p1 => EFI   512M        vfat        1
+p2 => boot  1G          ext4        20
+p3 => Swap  =RAM        Swap        19
+p4 => Root  ~100G       btrfs       20
+p5 => Home  ~100G       btrfs/zfs   42
+p6 => Repo  ...         btrfs       20
+
+
+
+mkswap /dev/nvme0n1p3
+
+mkfs.vfat /dev/nvme0n1p1
+mkfs.ext4 /dev/nvme0n1p2
+mkfs.btrfs /dev/nvme0n1p4
+mkfs.btrfs /dev/nvme0n1p5
+mkfs.exfat /dev/nvme0n1p6
+
+blkid
+zpool create -o compression=lz4 zroot < /dev/nvme0n1p5 PARTUUID >
+zfs create zroot/ROOT/debian
+
+# btrfs root disk mount yap
+mount /dev/nvme0n1p4 /mnt
+
+# btrfs sub volumes
+btrfs su cr /mnt/@
+btrfs su cr /mnt/@snapshots
+
+umount /mnt
+mount -t btrfs -o noatime,compress=lzo,space_cache=v2,subvol=@ /dev/nvme0n1p4 /mnt
+
+
+# Alt dizin ve alanları mount yap
+mkdir -p /mnt/home
+mkdir -p /mnt/.snapshots
+mkdir -p /mnt/boot
+mkdir -p /mnt/boot/efi
+
+mount -t btrfs -o noatime,compress=lzo,space_cache=v2,subvol=@snapshots /dev/nvme0n1p4 /mnt/.snapshots
+
+mount /dev/nvme0n1p5 /mnt/home
+mount /dev/nvme0n1p2 /mnt/boot
+
+mkdir -p /mnt/boot/efi
+mount /dev/nvme0n1p1 /mnt/boot/efi
+
+# swap disk mount yap
+swapon /dev/nvme0n1p3
+
+
+
+
+
+
+
+
+## kurulum için gerekli dosyaları kopyala
+cp -r kaynak_klasör /mnt/
+
+
+# Temel altyapının kurulması
+# ubuntu mantic 23.10 sürümü
+debootstrap mantic /mnt
+
+
+# Disk bölümlerinin diske tanıtılması
+genfstab -U /mnt >> /mnt/etc/fstab
+# veya kopyala-düzenle =>
+	## cp /etc/apt/sources.list /mnt/etc/apt
+	## nano /mnt/etc/apt/sources.list
+# veya fstab  dosyasını kendin yaz
+
+
+
+for dir in sys dev proc ; do mount --rbind /$dir /mnt/$dir && mount --make-rslave /mnt/$dir ; done
+
+
+# CHRoot ile gir
+chroot /mnt /bin/bash
+{
+	passwd
+	
+	sudo su
+	
+	apt update
+	apt ugrade -y
+	
+	apt install linux-image-generic -y
+	apt install linux-xanmod-x64v4 -y
+	
+	apt install update-manager-core
+	
+	do-release-upgrade
+	
+	apt install locales
+	
+	
+	apt install exfat-utils -y
+	apt install debootstrap genfstab -y
+	apt install btrfs-progs zfsutils-linux zfs-initramfs zfs-dkms -y
+	sudo apt install timeshift
+	
+	nano etc/locale.gen
+	## en_US.UTF-8 UTF-8
+	## tr_TR.UTF-8 UTF-8
+	
+	locale-gen
+	
+	dpkg-reconfigure tzdata
+	
+	setxkbmap -layou tr
+	
+	apt install grub-efi-amd64
+	## grub-install --target=x86_64 --efi-directory=/boot --bootloader-id=Ubuntu
+	grub-install /dev/nvme0n1
+	update-grub
+	
+	systemctl enable NetworkManager
+	nano /etc/netplan/networkmanager.yaml
+	# network:
+	#  version: 2
+	#  renderer: NetworkManager
+	
+	zpool set cachefile=/etc/zfs/zpool.cache zroot
+	
+	
+	sudo systemctl enable zfs-zet.service zfs.target zfs-import.target zfs-mount.service zfs-import-cache.service zfs-import-scan.service
+	
+	apt install lightdm lightdm-gtk-greeter
+	apt install kde-full
+	apt install plasma-workspace-wayland -y
+	apt install kubuntu-desktop -y
+	apt install plasma-desktop -y
+	
+	
+	
+	
+	
+	
+	useradd -mG sudo mustafa
+	passwd mustafa
+
+	
+	systemctl enable --now gdm
+	
+	
+	sudo btrfs subvolume snapshot /@ /.
+	
+}
+
+
+
+
+
+# BİTİRİŞ
+
+swapoff --all
+umount --all
+
+reboot

@@ -1,0 +1,23 @@
+Disk {
+	1GB fat boot/efi
+	16GB swap
+	100GB btrfs root
+	999GB zfs home
+}
+
+/home
+
+/home/mustafa
+
+/home/mustafa/Desktop
+/home/mustafa/Documents
+/home/mustafa/Downloads
+/home/mustafa/Videos
+/home/mustafa/Pictures
+/home/mustafa/Music
+/home/mustafa/Public
+/home/mustafa/Templates
+
+
+
+

@@ -1,0 +1,6 @@
+sudo fdisk /dev/nvme0n1
+
+"g\n"
+"n\n"
+
+n

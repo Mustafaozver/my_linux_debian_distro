@@ -1,0 +1,8 @@
+UUID=a6409d7b-f562-42ec-9cca-c567a7dcfab5 / btrfs rw,noatime,compress=lzo,ssd,discard=async,space_cache=v2,subvolid=256,subvol=/@ 0 0
+UUID=a6409d7b-f562-42ec-9cca-c567a7dcfab5 /.snapshots btrfs rw,noatime,compress=lzo,ssd,discard=async,space_cache=v2,subvolid=257,subvol=/@snapshots 0 0
+UUID=363489a1-0b4b-4035-893f-5c16f25d0458 /home ext4 rw,relatime 0 0
+UUID=aa922904-1239-4180-8e68-a36cb187d516 /boot ext4 rw,relatime 0 0
+UUID=D383-2FF2 /boot/efi vfat rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro 0 0
+tmpfs /tmp tmpfs rw,nosuid,nodev,inode64 0 0
+UUID=c1bce6fd-211f-4c5b-9bb8-2ffbd6656562 swap swap sw 0 0
+

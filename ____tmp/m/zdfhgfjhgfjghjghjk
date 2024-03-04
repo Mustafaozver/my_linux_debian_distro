@@ -1,0 +1,18 @@
+/dev/sdb1: LABEL="KUBUNTU 23_" UUID="DC32-7D7A" BLOCK_SIZE="512" TYPE="vfat" PARTLABEL="Microsoft Basic Data" PARTUUID="239ffb60-12c5-4353-8fad-33583eb956b0"
+/dev/loop1: BLOCK_SIZE="131072" TYPE="squashfs"
+/dev/nvme0n1p5: UUID="927052ce-ebc3-4e1e-aeb6-f086ceb1880a" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="a21c02fb-63ca-4804-b2ac-e095fb815e09"
+/dev/nvme0n1p3: UUID="e807960b-f8bf-4dd1-ac73-33b9ca973353" TYPE="swap" PARTUUID="b0582028-2bd8-44e0-8577-ef1bad945561"
+/dev/nvme0n1p1: UUID="1A51-D5B5" BLOCK_SIZE="512" TYPE="vfat" PARTUUID="528461fa-06d0-49f0-aa71-3ed05599c4ca"
+/dev/nvme0n1p6: UUID="1AA5-81DC" BLOCK_SIZE="512" TYPE="vfat" PARTUUID="c6ebe120-46ea-43c1-a43e-7af5163a6736"
+/dev/nvme0n1p4: UUID="f47ea958-852f-4331-b379-1e809b208360" UUID_SUB="dd4807c8-909f-4ef6-a3e8-3ebf9c86cd35" BLOCK_SIZE="4096" TYPE="btrfs" PARTUUID="0f2089d7-7da1-4df3-82be-bde09b0a4fbb"
+/dev/nvme0n1p2: UUID="7c2d533d-06a7-4fb2-82a3-73266683c816" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="cf407104-9fae-4ccd-9db9-4a40df9ee12f"
+/dev/loop6: BLOCK_SIZE="131072" TYPE="squashfs"
+/dev/loop4: BLOCK_SIZE="131072" TYPE="squashfs"
+/dev/loop2: BLOCK_SIZE="131072" TYPE="squashfs"
+/dev/loop0: BLOCK_SIZE="131072" TYPE="squashfs"
+/dev/loop5: BLOCK_SIZE="131072" TYPE="squashfs"
+/dev/loop3: BLOCK_SIZE="131072" TYPE="squashfs"
+
+
+
+wipefs --all /dev/nvme0n1p4 => bölümü siler

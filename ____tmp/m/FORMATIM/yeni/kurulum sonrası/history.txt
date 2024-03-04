@@ -1,0 +1,112 @@
+    1  clear
+    2  apt update
+    3  apt install debootstrap
+    4  clear
+    5  sudo fdisk /dev/nvme0n1
+    6  clear
+    7  mkswap /dev/nvme0n1p3
+    8  swapon /dev/nvme0n1p3
+    9  mkfs.vfat /dev/nvme0n1p1
+   10  mkfs.ext4 /dev/nvme0n1p2
+   11  mkfs.btrfs /dev/nvme0n1p4
+   12  mkfs.ext4 /dev/nvme0n1p5
+   13  mkfs.vfat /dev/nvme0n1p6
+   14  clear
+   15  mount /dev/nvme0n1p4 /mnt
+   16  btrfs su cr /mnt/@
+   17  btrfs su cr /mnt/@snapshots
+   18  umount /mnt
+   19  mount -t btrfs -o noatime,compress=lzo,space_cache=v2,subvol=@ /dev/nvme0n1p4 /mnt
+   20  mkdir -p /mnt/.snapshots
+   21  mount -t btrfs -o noatime,compress=lzo,space_cache=v2,subvol=@snapshots /dev/nvme0n1p4 /mnt/.snapshots
+   22  mkdir -p /mnt/home
+   23  mount /dev/nvme0n1p5 /mnt/home
+   24  mkdir -p /mnt/boot
+   25  mount /dev/nvme0n1p2 /mnt/boot
+   26  mkdir -p /mnt/boot/efi
+   27  mount /dev/nvme0n1p1 /mnt/boot/efi
+   28  debootstrap mantic /mnt
+   29  for dir in sys dev proc ; do mount --rbind /$dir /mnt/$dir && mount --make-rslave /mnt/$dir ; done
+   30  sudo chroot /mnt apt linux-image-generic
+   31  sudo chroot /mnt apt install linux-image-generic
+   32  sudo chroot /mnt apt install grub-efi-amd64 -y
+   33  sudo chroot /mnt apt install locales -y
+   34  sudo chroot /mnt dpkg-reconfigure locales
+   35  sudo chroot /mnt dpkg-reconfigure tzdata
+   36  sudo chroot /mnt locale-gen
+   37  sudo chroot /mnt apt install btrfogs -y
+   38  sudo chroot /mnt apt install exfatprogs -y
+   39  sudo chroot /mnt apt install exfat-utils -y
+   40  sudo chroot /mnt apt install debootstrap -y
+   41  sudo chroot /mnt apt install genfstab -y
+   42  sudo chroot /mnt apt install zfsutils-linux -y
+   43  sudo chroot /mnt apt install zfs-initramfs -y
+   44  sudo chroot /mnt apt install zfs-dkms -y
+   45  sudo chroot /mnt apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev wget -y
+   46  sudo chroot /mnt systemctl start zfs-zed.service
+   47  sudo chroot /mnt modprobe zfs
+   48  sudo chroot /mnt apt update
+   49  sudo chroot /mnt apt install lightdm lightdm-gtk-greeter -y
+   50  sudo chroot /mnt apt install kde-full -y
+   51  sudo chroot /mnt apt install plasma-workspace-wayland -y
+   52  sudo chroot /mnt apt install kubuntu-desktop -y
+   53  sudo chroot /mnt apt install plasma-desktop -y
+   54  sudo chroot /mnt bash
+   55  sudo chroot /mnt apt install exfat-utils -y
+   56  sudo chroot /mnt apt install btrfs-progs zfsutils-linux zfs-initramfs zfs-dkms -y
+   57  sudo chroot /mnt apt install git dosfstools amd64-microcode nano -y
+   58  sudo chroot /mnt apt install dosfstools amd64-microcode network-manager git cryptsetup sudo -y
+   59  sudo chroot /mnt apt install lsb-release ca-certificates apt-transport-https software-properties-common -y
+   60  sudo chroot /mnt apt install cups printer-driver-all system-config-printer simple-scan xsane -y
+   61  sudo chroot /mnt apt install tzdata curl ca-certificates openssh-server curl -y
+   62  sudo chroot /mnt apt install sensors-applet -y
+   63  sudo chroot /mnt apt install psensor fancontrol -y
+   64  sudo chroot /mnt apt install tlp ubuntu-restricted-extras -y
+   65  sudo chroot /mnt apt install ufw -y
+   66  sudo chroot /mnt ubuntu-drivers autoinstall
+   67  sudo chroot /mnt bash
+   68  sudo chroot /mnt nala install chromium
+   69  sudo chroot /mnt nala install chrome
+   70  sudo chroot /mnt apt remove --purge snapd
+   71  sudo chroot /mnt apt install synaptic -y
+   72  sudo chroot /mnt apt install flatpak -y
+   73  sudo chroot /mnt apt install nala -y
+   74  sudo chroot /mnt apt install libreoffice -y
+   75  sudo chroot /mnt apt install veracrypt -y
+   76  sudo chroot /mnt apt install chromium -y
+   77  sudo chroot /mnt apt install opera-stable -y
+   78  sudo chroot /mnt apt install thunderbird -y
+   79  sudo chroot /mnt apt update
+   80  sudo chroot /mnt apt --fix-missing update
+   81  sudo chroot /mnt apt --fix-broken install
+   82  sudo chroot /mnt apt autoremove
+   83  sudo chroot /mnt apt clean
+   84  sudo chroot /mnt apt install wget gpd nano -y
+   85  sudo chroot /mnt apt install wget -y
+   86  sudo chroot /mnt apt install grub-efi-amd64 -y
+   87  sudo chroot /mnt update-grub
+   88  sudo chroot /mnt grub-install
+   89  sudo chroot /mnt bash
+   90  sudo chroot /mnt passwd
+   91  sudo chroot /mnt useradd -mG sudo mustafa
+   92  sudo chroot /mnt passwd mustafa
+   93  sudo chroot /mnt apt list --installed
+   94  sudo chroot /mnt apt list --installed > list.txt
+   95  ls
+   96  nano list.txt
+   97  dolphin
+   98  apt install kio-admin
+   99  dolphin
+  100  sudo chroot /mnt systemctl enable --now lightdm
+  101  sudo chroot /mnt btrfs subvolume snapshot /@ /.
+  102  sudo chroot /mnt btrfs subvolume snapshot /@ /.snaphots
+  103  sudo chroot /mnt apt install timeshift -y
+  104  sudo chroot /mnt apt list --installed > list.txt
+  105  swapoff --all
+  106  umount --all
+  107  history
+
+
+
+
+

@@ -1,0 +1,52 @@
+sudo apt-get install bzip2 git make gcc libncurses-dev flex
+sudo apt-get install bison bc cpio libelf-dev libssl-dev syslinux dosfstools
+
+
+
+
+
+
+
+
+
+
+
+chown root debian-chroot
+
+debootstrap --arch=amd64 --no-merged-usr sid debian-chroot https://deb.debian.org/debian
+
+
+
+## bir kaç defa
+mount -o bind /$i debian-chroot/$i
+
+
+
+echo 'deb http://deb.debian.org/debian sid main contrib non-free' > debian-chroot/etc/apt/sources.list
+echo 'deb http://deb.xanmod.org releases main' > debian-chroot/etc/apt/sources.list
+
+chroot debian-chroot apt update
+chroot debian-chroot apt install linux-image-amd64 -y
+chroot debian-chroot apt install linux-xanmod-x64v4
+chroot debian-chroot apt install grub-pc-bin grub-efi-ia32-bin grub-efi -y
+chroot debian-chroot apt install live-config live-boot -y 
+chroot debian-chroot apt install xorg xinit -y
+chroot debian-chroot apt install atmel-firmware bluez-firmware dahdi-firmware-nonfree -y
+chroot debian-chroot apt install firmware-amd-graphics firmware-ath9k-htc firmware-atheros -y
+chroot debian-chroot apt install firmware-b43-installer firmware-b43legacy-installer firmware-bnx2 -y
+chroot debian-chroot apt install firmware-bnx2x firmware-brcm80211 firmware-cavium -y
+chroot debian-chroot apt install firmware-intel-sound firmware-intelwimax firmware-ipw2x00 -y
+chroot debian-chroot apt install firmware-ivtv firmware-iwlwifi firmware-libertas -y
+chroot debian-chroot apt install firmware-linux firmware-linux-free firmware-linux-nonfree -y
+chroot debian-chroot apt install firmware-misc-nonfree firmware-myricom firmware-netronome -y
+chroot debian-chroot apt install firmware-netxen firmware-qcom-soc firmware-qlogic -y
+chroot debian-chroot apt install firmware-realtek firmware-samsung firmware-siano -y
+chroot debian-chroot apt install firmware-sof-signed firmware-ti-connectivity firmware-zd1211 hdmi2usb-fx2-firmware -y
+
+
+chroot debian-chroot apt install kde-full -y
+
+
+
+## içeri komut satırı ile gir
+chroot debian-chroot /bin/bash

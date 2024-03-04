@@ -1,0 +1,33 @@
+
+dependencies
+
+format
+
+mount
+
+debootstrap ile temel at
+
+dosya kopyala 1 => setup dosyası
+dosya kopyala 2 => sources, resolv
+
+localize ayarlarını yap
+
+kernel yükle
+
+cp /proc/mounts /etc/fstab
+fstab oluştur
+
+kütüphaneler yükle
+
+gerekli programları yükle
+
+chroot ile içeri gir ve gerekli lib yükle
+
+dahili kodları çalıştır
+
+bootloader kur
+
+kulanıcı ve yetkiler
+
+son ayarlamalar
+

@@ -1,0 +1,100 @@
+    1  apt update
+    2  apt upgrade
+    3  exit
+    4  apt install btrfs-progs
+    5  dpkg-reconfigure locales
+    6  passwd 
+    7  apt install linux-image-generic
+    8  apt install locales
+    9  apt install linux-xanmod-x64v4
+   10  wget -qO - https://dl.xanmod.org/archive.key | sudo gpg --dearmor -o /usr/share/keyrings/xanmod-archive-keyring.gpg
+   11  apt install wget gpd
+   12  apt update
+   13  apt upgrade
+   14  wget -qO - https://dl.xanmod.org/archive.key | sudo gpg --dearmor -o /usr/share/keyrings/xanmod-archive-keyring.gpg
+   15  echo 'deb [signed-by=/usr/share/keyrings/xanmod-archive-keyring.gpg] http://deb.xanmod.org releases main' | sudo tee /etc/apt/sources.list.d/xanmod-release.list
+   16  wget -qO - https://dl.xanmod.org/archive.key | sudo gpg --dearmor -o /usr/share/keyrings/xanmod-archive-keyring.gpg
+   17  apt update
+   18  apt upgrade
+   19  apt install wget gpd
+   20  apt install linux-xanmod-x64v4
+   21  ls
+   22  cd home
+   23  ls
+   24  dpkg -i xmk.deb
+   25  cd ..
+   26  passwd
+   27  apt install kde-full
+   28  sudo apt-get remove ubuntu-gnome-desktop
+   29  sudo apt-get remove gnome-shell
+   30  sudo apt-get remove --auto-remove ubuntu-gnome-desktop
+   31  sudo apt-get autoremove 
+   32  sudo apt-get remove gdm
+   33  sudo apt-get install ubuntu-desktop
+   34  sudo apt-get install unity
+   35  sudo apt-get remove ubuntu-gnome-desktop
+   36  sudo apt-get remove gnome-shell
+   37  sudo apt-get remove --auto-remove ubuntu-gnome-desktop
+   38  sudo apt-get autoremove 
+   39  sudo apt-get remove gdm
+   40  sudo apt install lightdm
+   41  systemctl status display-manager
+   42  sudo dpkg-reconfigure gdm3
+   43  sudo dpkg --configure sddm
+   44  sudo apt install lightdm
+   45  systemctl status display-manager
+   46  sudo dpkg-reconfigure gdm3
+   47  sudo dpkg --configure sddm
+   48  apt --fix-broken install
+   49  chroot debian-chroot apt install xorg xinit -y
+   50  chroot debian-chroot apt install atmel-firmware bluez-firmware dahdi-firmware-nonfree -y
+   51  chroot debian-chroot apt install firmware-amd-graphics firmware-ath9k-htc firmware-atheros -y
+   52  chroot debian-chroot apt install firmware-b43-installer firmware-b43legacy-installer firmware-bnx2 -y
+   53  chroot debian-chroot apt install firmware-bnx2x firmware-brcm80211 firmware-cavium -y
+   54  chroot debian-chroot apt install firmware-intel-sound firmware-intelwimax firmware-ipw2x00 -y
+   55  chroot debian-chroot apt install firmware-ivtv firmware-iwlwifi firmware-libertas -y
+   56  chroot debian-chroot apt install firmware-linux firmware-linux-free firmware-linux-nonfree -y
+   57  chroot debian-chroot apt install firmware-misc-nonfree firmware-myricom firmware-netronome -y
+   58  chroot debian-chroot apt install firmware-netxen firmware-qcom-soc firmware-qlogic -y
+   59  chroot debian-chroot apt install firmware-realtek firmware-samsung firmware-siano -y
+   60  chroot debian-chroot apt install firmware-sof-signed firmware-ti-connectivity firmware-zd1211 hdmi2usb-fx2-firmware -y
+   61  apt install xorg xinit -y
+   62  apt install atmel-firmware bluez-firmware dahdi-firmware-nonfree -y
+   63  apt install firmware-amd-graphics firmware-ath9k-htc firmware-atheros -y
+   64  apt install firmware-b43-installer firmware-b43legacy-installer firmware-bnx2 -y
+   65  apt update
+   66  apt upgrade
+   67  sudo apt-get install distrobox podman -y
+   68  sudo add-apt-repository ppa:alessandro-strada/ppa
+   69  sudo apt-get install google-drive-ocamlfuse
+   70  sudo apt-get install neofetch
+   71  wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+   72  sh install.sh
+   73  ls
+   74  sh install.sh
+   75  apt install zsh
+   76  sh install.sh
+   77  cd ~/.oh-my-zsh/custom/plugins && git clone https://github.com/zsh-users/zsh-syntax-highlighting
+   78  cd ~/.oh-my-zsh/custom/plugins && git clone https://github.com/zsh-users/zsh-autosuggestions
+   79  cd /
+   80  sudo apt remove --purge snapd
+   81  blkid
+   82  cp /proc/mounts /etc/fstab
+   83  nano /etc/fstab
+   84  apt install nano
+   85  nano /etc/fstab
+   86  blkid
+   87  nano /etc/fstab
+   88  cp /proc/mounts /etc/fstab
+   89  nano /etc/fstab
+   90  blkid
+   91  nano /etc/fstab
+   92  sudo dpkg-reconfigure tzdata
+   93  useradd -mG sudo mustafa
+   94  passwd mustafa
+   95  apt install grub-efi-amd64
+   96  blkid
+   97  grub-install /dev/nvme0n1
+   98  update-grub
+   99  history
+  100  history > chroot.txt

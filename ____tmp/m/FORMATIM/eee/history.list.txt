@@ -1,0 +1,48 @@
+    1  clear
+    2  exit
+    3  lsblk
+    4  clear
+    5  apt update
+    6  apt upgrade
+    7  fdisk
+    8  lsblk
+    9  fdisk /dev/nvme0n1
+   10  lsblk
+   11  mkfs.fvat /dev/nvme0n1p1
+   12  mkfs.vfat /dev/nvme0n1p1
+   13  mkswap /dev/nvme0n1p2
+   14  mkfs.btrfs /dev/nvme0n1p3
+   15  mkfs.ext4 /dev/nvme0n1p4
+   16  mount /dev/nvme0n1p3 /mnt
+   17  btrfs su cr /mnt/@
+   18  btrfs su cr /mnt/@snapshots
+   19  umount /mnt
+   20  mount -t btrfs -o noatime,compress=lzo,space_cache=v2,subvol=@ /dev/nvme0n1p3
+   21  mount -t btrfs -o noatime,compress=lzo,space_cache=v2,subvol=@ /dev/nvme0n1p3 /mnt
+   22  mkdir -p /mnt/boot
+   23  mkdir -p /mnt/home
+   24  mkdir -p /mnt/.snapshots
+   25  mount -t btrfs -o noatime,compress=lzo,space_cache=v2,subvol=@snapshots /dev/nvme0n1p3 /mnt/.snapshots
+   26  mount /dev/nvme0n1p4 /mnt/home
+   27  lsblk
+   28  mkdir -p /mnt/boot/efi
+   29  mount /dev/nvme0n1p1
+   30  mount /dev/nvme0n1p1 /mnt/boot/efi
+   31  apt install debootstrap
+   32  debootstrap mantic /mnt
+   33  mount /dev/nvme0n1p1 /mnt/boot/efi
+   34  echo "yanlış olmuş zaten munt etmişiz"
+   35  cp /etc/apt/sources.list
+   36  cp /etc/apt/sources.list /mnt/etc/apt
+   37  nano /mnt/etc/apt
+   38  nano /mnt/etc/apt/sources.list
+   39  for dir in sys dev proc ; do mount --rbind /$dir /mnt/$dir && mount --make-rslave /mnt/$dir ; done
+   40  cp /etc/resolv.conf /mnt/etc/
+   41  nano /mnt/etc/resolv.conf
+   42  chroot /mnt /bin/bash
+   43  history > history.list.txt
+   44  apt install btrfs-progs
+   45  dpkg-reconfigure locales
+   46  passwd
+   47  apt install linux-image-generic
+   48  history > history.list.txt
